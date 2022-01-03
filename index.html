@@ -10,30 +10,42 @@
   </head>
   <body>
     <header>
-      <a id="highScore"" href="">View High Score </a>
+      <a id="highScore" href="">View High Score </a>
       <div class="timestyle">
-        Time: 
+        Time:
         <span id="time">0</span>
       </div>
     </header>
-
-    <main>
-      <h1>Coding Quiz Challenge</h1>
-      <p>
-        Try to answer the following code-related questions within the time
-        limit.
-      </p>
-      <p>
-        Keep in mind that incorrect answers will penalize your scoreTime by 10
-        seconds!
-      </p>
-      <button id="startbutton" type="button">START</button>
-    </main>
+    <center>
+      <main class="main">
+        <div id="question-container" class="hide controls">
+          <div id="question">Question</div>
+          <div id="answerbuttons" class="buttongrid">
+            <button class="button">1. Answer</button>
+            <button class="button">2. Answer</button>
+            <button class="button">3. Answer</button>
+            <button class="button">4. Answer</button>
+          </div>
+        </div>
+        <div id="welcome-container">
+          <h1>Coding Quiz Challenge</h1>
+          <p>
+            Try to answer the following code-related questions within the time
+            limit.
+          </p>
+          <p>
+            Keep in mind that incorrect answers will penalize your scoreTime by
+            10 seconds!
+          </p>
+          <button id="startbutton" class="startbutton button">START</button>
+        </div>
+      </main>
+    </center>
 
     <footer>
       <p>© Parul Raj | Designed for UW's Coding Bootcamp</p>
     </footer>
 
-    <script src="./assets/js/script.js"></script>
+    <script defer src="./assets/js/script.js"></script>
   </body>
 </html>
