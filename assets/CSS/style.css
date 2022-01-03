@@ -1,20 +1,20 @@
 /* HEADER */
 #highScore {
-text-decoration: none;
+  text-decoration: none;
 }
 
 .timestyle {
   float: right;
 }
 
-main{
-    text-align: center;
+main {
+  text-align: center;
 }
 /* FOOTER */
 footer {
-    position: absolute;
-    text-align: center;
-    left: 0;
-    right: 0;
-    bottom: 3%;
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 3%;
 }
