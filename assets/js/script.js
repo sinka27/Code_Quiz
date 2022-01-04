@@ -6,7 +6,7 @@ var questionEl = document.getElementById("question");
 var answerButtonsEl = document.getElementById("answerbuttons");
 var timeEl = document.getElementById("time");
 var secondsLeft = 60;
-var randomQuestion, currentQuestionIndex;
+var randomQuestion;
 
 //creating timer of 60 seconds
 function setTime() {
@@ -29,29 +29,30 @@ function startQuiz() {
   //hiding welcome note and start button
   welcomeContainer.classList.add("hide");
 
-  //currentQuestionIndex=0;
+  //sorting questions array randomly
+  randomQuestion = questions.sort(() => Math.random() - 0.5);
 
   //displaying questions and answer options
   questionContainer.classList.remove("hide");
 
-  //calling question function
-  showQuestion();
+  //calling question function to show first question
+  showQuestion(0);
 }
 
 //shows questions and answer options to user
-function showQuestion() {
+function showQuestion(quesNum) {
   //display question
-  questionEl.innerText = questions[0].question;
+  questionEl.innerText = questions[quesNum].question;
   answerButtonsEl.innerText = "";
 
   //creating 4 answer options' buttons
-  for (var i = 0; i < questions[0].answers.length; i++) {
+  for (var i = 0; i < questions[quesNum].answers.length; i++) {
     var button = document.createElement("button");
-    button.innerText = questions[0].answers[i].text;
+    button.innerText = questions[quesNum].answers[i].text;
     button.classList.add("button");
     answerButtonsEl.appendChild(button);
 
-    var answerValue = questions[0].answers[i].correct;
+    var answerValue = questions[quesNum].answers[i].correct;
     var answerStatus = function (value, button) {
       return function () {
         //displaying message if answer is correct or incorrect
@@ -69,6 +70,8 @@ function showQuestion() {
           secondsLeft -= 10;
           messageContainer.innerText = "INCORRECT!";
         }
+        //to show next question
+        showQuestion(quesNum + 1);
       };
     };
     //add event listener to answer buttons
@@ -81,6 +84,10 @@ function endQuiz() {
   //if secondsLeft<=0 then end the game
 }
 
+//restarting the quiz once the quiz has ended
+function restartQuiz() {
+  startQuiz();
+}
 //creating array of different questions
 var questions = [
   {
@@ -93,40 +100,46 @@ var questions = [
       { text: "4. <TITLE>", correct: false },
     ],
   },
-  //   {
-  //     question: "Which one of the following also known as Conditional Expression:",
-  //     answers: [
-  //       { text: "1. Alternative to if-else", correct:false },
-  //       { text: "2. Switch statement", correct: false },
-  //       { text: "3. If-then-else statement", correct: false },
-  //       { text: "4. Immediate if", correct: true },
-  //     ],
-  //   },
-  //   {
-  //   question:"Which of the following variables takes precedence over the others if the names are the same?",
-  //   answers: [
-  //     { text: "1. Global variable", correct:false },
-  //     { text: "2. The local element", correct: true },
-  //     { text: "3. Constant", correct: false },
-  //     { text: "4. None of the above", correct: false },
-  //   ],
-  // },
-  // {
-  //   question:"Choose the correct snippet from the following to check if the variable 'a' is not equal the 'NULL':",
-  //   answers: [
-  //     { text: "1. if(a!==null)", correct:true },
-  //     { text: "2. if (a!)", correct: false },
-  //     { text: "3. if(a!null)", correct: false },
-  //     { text: "4. if(a!=null)", correct: false },
-  //   ],
-  // },
-  // {
-  //   question:"In JavaScript the x===y statement implies that:",
-  //   answers: [
-  //     { text: "1. Both x and y are equal in value, type and reference address as well.", correct:false },
-  //     { text: "2. Both are x and y are equal in value only.", correct: false },
-  //     { text: "3. Both are equal in the value and data type.", correct: true },
-  //     { text: "4. Both are not same at all.", correct: false },
-  //   ],
-  // },
+  {
+    question:
+      "Which one of the following also known as Conditional Expression:",
+    answers: [
+      { text: "1. Alternative to if-else", correct: false },
+      { text: "2. Switch statement", correct: false },
+      { text: "3. If-then-else statement", correct: false },
+      { text: "4. Immediate if", correct: true },
+    ],
+  },
+  {
+    question:
+      "Which of the following variables takes precedence over the others if the names are the same?",
+    answers: [
+      { text: "1. Global variable", correct: false },
+      { text: "2. The local element", correct: true },
+      { text: "3. Constant", correct: false },
+      { text: "4. None of the above", correct: false },
+    ],
+  },
+  {
+    question:
+      "Choose the correct snippet from the following to check if the variable 'a' is not equal the 'NULL':",
+    answers: [
+      { text: "1. if(a!==null)", correct: true },
+      { text: "2. if (a!)", correct: false },
+      { text: "3. if(a!null)", correct: false },
+      { text: "4. if(a!=null)", correct: false },
+    ],
+  },
+  {
+    question: "In JavaScript the x===y statement implies that:",
+    answers: [
+      {
+        text: "1. Both x and y are equal in value, type and reference address as well.",
+        correct: false,
+      },
+      { text: "2. Both are x and y are equal in value only.", correct: false },
+      { text: "3. Both are equal in the value and data type.", correct: true },
+      { text: "4. Both are not same at all.", correct: false },
+    ],
+  },
 ];
