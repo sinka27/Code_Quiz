@@ -1,4 +1,3 @@
-//var startPath = "./assets/HTML/start.html";
 var startButton = document.getElementById("startbutton");
 var welcomeContainer = document.getElementById("welcome-container");
 var questionContainer = document.getElementById("question-container");
@@ -7,7 +6,7 @@ var questionEl = document.getElementById("question");
 var answerButtonsEl = document.getElementById("answerbuttons");
 var timeEl = document.getElementById("time");
 var secondsLeft = 60;
-var shuffledQuestion, currentQuestionIndex;
+var randomQuestion, currentQuestionIndex;
 
 //creating timer of 60 seconds
 function setTime() {
@@ -39,16 +38,49 @@ function startQuiz() {
   showQuestion();
 }
 
+//shows questions and answer options to user
 function showQuestion() {
+  //display question
   questionEl.innerText = questions[0].question;
   answerButtonsEl.innerText = "";
-  questions[0].answers.forEach((answer) => {
-    const button = document.createElement("button");
-    button.innerText = answer.text;
+
+  //creating 4 answer options' buttons
+  for (var i = 0; i < questions[0].answers.length; i++) {
+    var button = document.createElement("button");
+    button.innerText = questions[0].answers[i].text;
     button.classList.add("button");
     answerButtonsEl.appendChild(button);
-  });
+
+    var answerValue = questions[0].answers[i].correct;
+    var answerStatus = function (value, button) {
+      return function () {
+        //displaying message if answer is correct or incorrect
+        messageContainer.classList.remove("hide");
+        if (value) {
+          console.log("Correct Answer");
+          //changing color of button when answer correct
+          button.style.backgroundColor = "green";
+          messageContainer.innerText = "CORRECT!";
+        } else {
+          console.log("Incorrect Answer");
+          //changing color of button when answer incorrect
+          button.style.backgroundColor = "red";
+          //subtracting 10 seconds when answered incorrectly from the timer
+          secondsLeft -= 10;
+          messageContainer.innerText = "INCORRECT!";
+        }
+      };
+    };
+    //add event listener to answer buttons
+    button.addEventListener("click", answerStatus(answerValue, button), false);
+  }
 }
+
+//defining the end of the quiz
+function endQuiz() {
+  //if secondsLeft<=0 then end the game
+}
+
 //creating array of different questions
 var questions = [
   {
@@ -61,29 +93,40 @@ var questions = [
       { text: "4. <TITLE>", correct: false },
     ],
   },
+  //   {
+  //     question: "Which one of the following also known as Conditional Expression:",
+  //     answers: [
+  //       { text: "1. Alternative to if-else", correct:false },
+  //       { text: "2. Switch statement", correct: false },
+  //       { text: "3. If-then-else statement", correct: false },
+  //       { text: "4. Immediate if", correct: true },
+  //     ],
+  //   },
+  //   {
+  //   question:"Which of the following variables takes precedence over the others if the names are the same?",
+  //   answers: [
+  //     { text: "1. Global variable", correct:false },
+  //     { text: "2. The local element", correct: true },
+  //     { text: "3. Constant", correct: false },
+  //     { text: "4. None of the above", correct: false },
+  //   ],
+  // },
+  // {
+  //   question:"Choose the correct snippet from the following to check if the variable 'a' is not equal the 'NULL':",
+  //   answers: [
+  //     { text: "1. if(a!==null)", correct:true },
+  //     { text: "2. if (a!)", correct: false },
+  //     { text: "3. if(a!null)", correct: false },
+  //     { text: "4. if(a!=null)", correct: false },
+  //   ],
+  // },
+  // {
+  //   question:"In JavaScript the x===y statement implies that:",
+  //   answers: [
+  //     { text: "1. Both x and y are equal in value, type and reference address as well.", correct:false },
+  //     { text: "2. Both are x and y are equal in value only.", correct: false },
+  //     { text: "3. Both are equal in the value and data type.", correct: true },
+  //     { text: "4. Both are not same at all.", correct: false },
+  //   ],
+  // },
 ];
-
-// function mainPopulate(file, callbackFunction) {
-//     fetch(file)
-//         .then(function (response) {
-//             return response.text();
-//         })
-//         .then(function (text) {
-//             document.getElementById('main').innerHTML = text;
-
-//             if (callbackFunction !== null) {
-//                 callbackFunction();
-//             }
-//         })
-// }
-
-// function updateStartButton() {
-//     var startButton = document.getElementById("startbutton");
-//     startButton.onclick = function () {
-//       //calling our timer function
-//       setTime();
-
-//       //calling our question function
-//     };
-// }
-// mainPopulate(startPath, updateStartButton);
