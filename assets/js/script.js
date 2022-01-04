@@ -2,6 +2,7 @@
 var startButton = document.getElementById("startbutton");
 var welcomeContainer = document.getElementById("welcome-container");
 var questionContainer = document.getElementById("question-container");
+var messageContainer = document.getElementById("message-container");
 var questionEl = document.getElementById("question");
 var answerButtonsEl = document.getElementById("answerbuttons");
 var timeEl = document.getElementById("time");
