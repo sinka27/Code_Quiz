@@ -56,10 +56,10 @@ main {
 
 /* FOOTER */
 footer {
-  position: absolute;
+  position: fixed;
   text-align: center;
   left: 0;
   right: 0;
-  bottom: 3%;
+  bottom: 10px;
   font-weight: bolder;
 }
