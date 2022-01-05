@@ -4,17 +4,22 @@ var questionContainer = document.getElementById("question-container");
 var messageContainer = document.getElementById("message-container");
 var questionEl = document.getElementById("question");
 var answerButtonsEl = document.getElementById("answerbuttons");
+var initialsEl = document.getElementById("initials-form");
+var initials = document.querySelector("#initials");
 var timeEl = document.getElementById("time");
 var secondsLeft = 60;
+var timeInterval;
 var randomQuestion;
+var initialStore, scoreStore;
 
 //creating timer of 60 seconds
 function setTime() {
-  var timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     secondsLeft--;
     timeEl.textContent = secondsLeft;
-    if (secondsLeft === 0) {
+    if (secondsLeft <= 0) {
       clearInterval(timeInterval);
+      endQuiz();
     }
   }, 1000);
 }
@@ -41,53 +46,83 @@ function startQuiz() {
 
 //shows questions and answer options to user
 function showQuestion(quesNum) {
-  //display question
-  questionEl.innerText = questions[quesNum].question;
-  answerButtonsEl.innerText = "";
+  if (quesNum === questions.length) {
+    clearInterval(timeInterval);
+    endQuiz();
+  } else {
+    //display question
+    questionEl.innerText = questions[quesNum].question;
+    answerButtonsEl.innerText = "";
 
-  //creating 4 answer options' buttons
-  for (var i = 0; i < questions[quesNum].answers.length; i++) {
-    var button = document.createElement("button");
-    button.innerText = questions[quesNum].answers[i].text;
-    button.classList.add("button");
-    answerButtonsEl.appendChild(button);
+    //creating 4 answer options' buttons
+    for (var i = 0; i < questions[quesNum].answers.length; i++) {
+      var button = document.createElement("button");
+      button.innerText = questions[quesNum].answers[i].text;
+      button.classList.add("button");
+      answerButtonsEl.appendChild(button);
 
-    var answerValue = questions[quesNum].answers[i].correct;
-    var answerStatus = function (value, button) {
-      return function () {
-        //displaying message if answer is correct or incorrect
-        messageContainer.classList.remove("hide");
-        if (value) {
-          console.log("Correct Answer");
-          //changing color of button when answer correct
-          button.style.backgroundColor = "green";
-          messageContainer.innerText = "CORRECT!";
-        } else {
-          console.log("Incorrect Answer");
-          //changing color of button when answer incorrect
-          button.style.backgroundColor = "red";
-          //subtracting 10 seconds when answered incorrectly from the timer
-          secondsLeft -= 10;
-          messageContainer.innerText = "INCORRECT!";
-        }
-        //to show next question
-        showQuestion(quesNum + 1);
+      var answerValue = questions[quesNum].answers[i].correct;
+      var answerStatus = function (value, button) {
+        return function () {
+          //displaying message if answer is correct or incorrect
+          messageContainer.classList.remove("hide");
+          if (value) {
+            console.log("Correct Answer");
+            //changing color of button when answer correct
+            button.style.backgroundColor = "green";
+            messageContainer.innerText = "CORRECT!";
+          } else {
+            console.log("Incorrect Answer");
+            //changing color of button when answer incorrect
+            button.style.backgroundColor = "red";
+            //subtracting 10 seconds when answered incorrectly from the timer
+            secondsLeft -= 10;
+            messageContainer.innerText = "INCORRECT!";
+          }
+          // await new Promise(r => setTimeout(r, 1000));
+          messageContainer.classList.add("hide");
+          //to show next question
+          showQuestion(quesNum + 1);
+        };
       };
-    };
-    //add event listener to answer buttons
-    button.addEventListener("click", answerStatus(answerValue, button), false);
+      //add event listener to answer buttons
+      button.addEventListener("click", answerStatus(answerValue, button), false);
+    }
   }
 }
 
-//defining the end of the quiz
 function endQuiz() {
-  //if secondsLeft<=0 then end the game
+  questionContainer.classList.add("hide");
+  messageContainer.classList.remove("hide");
+  messageContainer.innerText = "TIME OVER! Your Final Score is: " + secondsLeft;
+  initialform();
+}
+
+//Initials form
+function initialform() {
+  initialsEl.classList.remove("hide");
+  initials.value="";
+  
+  //add event listener to submit button and redirect user to high score html page
+  document.getElementById("submitbtn").onclick = storeUserInfo();
+}
+
+//Storing highscore and initials
+function storeUserInfo() {
+  return function () {
+    //loacl storage
+    var userInitial = initials.value.trim();
+    localStorage.setItem(userInitial, secondsLeft);
+    console.log(initialStore);
+    console.log(scoreStore);
+    location.href = "./assets/HTML/score.html";
+  };
 }
 
 //restarting the quiz once the quiz has ended
-function restartQuiz() {
-  startQuiz();
-}
+// function restartQuiz() {
+//   startQuiz();
+// }
 //creating array of different questions
 var questions = [
   {
