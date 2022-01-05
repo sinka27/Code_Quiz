@@ -9,7 +9,6 @@ body {
   padding: 0;
   margin: 0;
   background-image: url("../images/background.jpeg");
-  /* filter: blur(8px); */
 }
 
 /* HEADER */
@@ -25,6 +24,7 @@ header {
   float: right;
 }
 
+/* MAIN SECTION */
 main {
   margin-top: 100px;
   text-align: center;

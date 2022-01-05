@@ -1,3 +1,4 @@
+//Global variables
 var startButton = document.getElementById("startbutton");
 var welcomeContainer = document.getElementById("welcome-container");
 var questionContainer = document.getElementById("question-container");
@@ -48,9 +49,10 @@ function startQuiz() {
 function showQuestion(quesNum) {
   if (quesNum === questions.length) {
     clearInterval(timeInterval);
+    //if all questions have been answered then end the quiz
     endQuiz();
   } else {
-    //display question
+    //display questions
     questionEl.innerText = questions[quesNum].question;
     answerButtonsEl.innerText = "";
 
@@ -86,23 +88,25 @@ function showQuestion(quesNum) {
         };
       };
       //add event listener to answer buttons
-      button.addEventListener("click", answerStatus(answerValue, button), false);
+      button.addEventListener("click",answerStatus(answerValue, button),false);
     }
   }
 }
 
+//End Quiz
 function endQuiz() {
   questionContainer.classList.add("hide");
   messageContainer.classList.remove("hide");
   messageContainer.innerText = "TIME OVER! Your Final Score is: " + secondsLeft;
+  //calling function to display initial input after quiz ends
   initialform();
 }
 
 //Initials form
 function initialform() {
   initialsEl.classList.remove("hide");
-  initials.value="";
-  
+  initials.value = "";
+
   //add event listener to submit button and redirect user to high score html page
   document.getElementById("submitbtn").onclick = storeUserInfo();
 }
@@ -113,17 +117,10 @@ function storeUserInfo() {
     //loacl storage
     var userInitial = initials.value.trim();
     localStorage.setItem(userInitial, secondsLeft);
-    console.log(initialStore);
-    console.log(scoreStore);
     location.href = "./assets/HTML/score.html";
   };
 }
 
-//restarting the quiz once the quiz has ended
-// function restartQuiz() {
-//   startQuiz();
-// }
-//creating array of different questions
 var questions = [
   {
     question:

@@ -9,13 +9,15 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.jpeg" />
   </head>
   <body>
+    <!-- HEADER -->
     <header>
-      <a id="highScore" href="./assets/HTML/score.html" >View High Score </a>
+      <a id="highScore" href="./assets/HTML/score.html">View High Score </a>
       <div class="timestyle">
         Time:
         <span id="time">0</span>
       </div>
     </header>
+    <!-- MAIN SECTION -->
     <center>
       <main class="main">
         <div id="question-container" class="hide">
@@ -39,14 +41,16 @@
           </p>
           <button id="startbutton">START</button>
         </div>
+        <!-- After Quiz ends, creating input for initials submission -->
         <div id="message-container" class="hide">Message</div>
         <div id="initials-form" class="hide">
-          Enter your initials: <input type="text" name="initials" id="initials" />
+          Enter your initials:
+          <input type="text" name="initials" id="initials" />
           <button id="submitbtn">SUBMIT</button>
         </div>
       </main>
     </center>
-
+    <!-- FOOTER -->
     <footer>© Parul Raj | Designed for UW's Coding Bootcamp</footer>
 
     <script defer src="./assets/js/script.js"></script>
