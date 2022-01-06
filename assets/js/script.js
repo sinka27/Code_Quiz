@@ -81,14 +81,20 @@ function showQuestion(quesNum) {
             secondsLeft -= 10;
             messageContainer.innerText = "INCORRECT!";
           }
-          // await new Promise(r => setTimeout(r, 1000));
-          messageContainer.classList.add("hide");
-          //to show next question
-          showQuestion(quesNum + 1);
+
+          //to show next question after 400ms
+          setTimeout(function () {
+            messageContainer.classList.add("hide");
+            showQuestion(quesNum + 1);
+          }, 400);
         };
       };
       //add event listener to answer buttons
-      button.addEventListener("click",answerStatus(answerValue, button),false);
+      button.addEventListener(
+        "click",
+        answerStatus(answerValue, button),
+        false
+      );
     }
   }
 }
@@ -97,7 +103,8 @@ function showQuestion(quesNum) {
 function endQuiz() {
   questionContainer.classList.add("hide");
   messageContainer.classList.remove("hide");
-  messageContainer.innerText = "TIME OVER! Your Final Score is: " + secondsLeft;
+  messageContainer.innerText =
+    "TIME OVER! " + "Your Final Score is: " + secondsLeft;
   //calling function to display initial input after quiz ends
   initialform();
 }
@@ -121,6 +128,7 @@ function storeUserInfo() {
   };
 }
 
+//Question and answer option array object
 var questions = [
   {
     question:
