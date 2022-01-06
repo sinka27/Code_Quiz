@@ -8,18 +8,39 @@ var highscore = [];
 function renderScore(key, value) {
   var li = document.createElement("li");
   li.textContent = key + " - " + value;
-
   highscoreList.appendChild(li);
 }
 
 function init() {
   // Get stored scores from localStorage
-  for (var i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var value = localStorage.getItem(key);
-    renderScore(key, value);
+  sortLocalStorage();
+  for (var i = 0; i < highscore.length; i++) {
+    var entry = highscore[i];
+    var initial = entry.initial;
+    var score = entry.score;
+    renderScore(initial, score);
   }
 }
+
+//sorting scores numerically in descending order
+function sortLocalStorage() {
+  var localStorageString = JSON.stringify(localStorage);
+  var scores = JSON.parse(localStorageString);
+  for (initial in scores) {
+    //creating JSON object to store and initials and score
+    var jsonData = {};
+    jsonData["initial"] = initial;
+    jsonData["score"] = scores[initial];
+    //JSON object pushed to highscore array
+    highscore.push(jsonData);
+  }
+
+  //Descending order sorting function
+  highscore.sort(function (a, b) {
+    return b.score - a.score;
+  });
+}
+
 init();
 
 //event listener for go back button
