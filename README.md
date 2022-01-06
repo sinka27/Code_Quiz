@@ -24,8 +24,8 @@
 * Git
 
 ## Links
-* Github source code: 
-* Github deployed page: 
+* Github source code: https://github.com/sinka27/Code_Quiz
+* Github deployed page: https://sinka27.github.io/Code_Quiz/
 
 ## Sample Video
 The following video demonstrates the application's functionality:
